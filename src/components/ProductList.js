@@ -5,7 +5,7 @@ export default function ProductList(props) {   //we can either access props ie v
     
   return (
     props.productList.map((product,i) =>{
-            return <Product product = {product}  key = {i}/>   
+            return <Product product = {product}  key = {i}   incrementQuantity = {props.incrementQuantity}  index = {i} />   
     })
   )
 }
