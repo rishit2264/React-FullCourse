@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function Product(props) {
   return (   //here the product used is from productList component where product is passed one by one as props in Product component
-    <div className="row">
+    <div className="row  mt-3">
       <div className="col-5">
         <h2>
           {props.product.name}    {/* This line displays a product name*/}
@@ -21,6 +21,7 @@ export default function Product(props) {
       <div className="col-2">
         {props.product.quantity * props.product.price}
       </div>
+      <button className='col-2 btn btn-danger' onClick={() => {props.removeItem(props.index)}}> Remove </button>
     </div>
   );
 }

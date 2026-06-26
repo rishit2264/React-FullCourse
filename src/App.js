@@ -3,6 +3,7 @@ import Navbar from './components/navbar';
 import ProductList from './components/ProductList';
 import React, {useState} from 'react';
 import Footer from './components/Footer';
+import AddItem from './components/addItem';
 
 function App() {
   const productList = [
@@ -29,6 +30,7 @@ function App() {
     newproductList[index].quantity++  
     newAmount += newproductList[index].price
     setproductList(newproductList);
+    settotalAmount(newAmount);
   }
 
   const decrementQuantity = (index) =>{          //this is the decrement function to decrement products used in Product.js  .
@@ -38,7 +40,36 @@ function App() {
       newproductList[index].quantity--;
       newAmount -= newproductList[index].price;
       setproductList(newproductList);
+      settotalAmount(newAmount);
   }
+  }
+
+  const resetQuantity = () => {
+    let newProductList = [...products]
+    newProductList.map((products) => {
+      products.quantity = 0
+    })
+    setproductList(newProductList);
+    settotalAmount(0);
+  }
+
+  const removeItem = (index) => {
+    let newProductList = [... products];
+    let newAmount = totalAmount;
+    newAmount -= newProductList[index].quantity * newProductList[index].price;
+    newProductList.splice(index,1);
+    setproductList(newProductList);
+    settotalAmount(newAmount);
+  }
+
+  const addItem = (name,price) => {
+    let newProductList = [... products];
+    newProductList.push({
+      name : name,
+      price : price,
+      quantity = 0
+    });
+    setproductList(newProductList);
   }
 
 //here we pass the incrementQuantity function (should be arrow function or else not work) to the product component as props because it has the button and event.
@@ -46,8 +77,9 @@ function App() {
     <>
       <Navbar />
       <main className="container mt-5">
-        <ProductList productList={products} incrementQuantity = {incrementQuantity} decrementQuantity = {decrementQuantity}/>      {/*here the productList = products because , products has the updated version of productList due to useState*/}
-        <Footer totalAmount = {0} />
+        <AddItem  addItem = {addItem} />
+        <ProductList productList={products} incrementQuantity = {incrementQuantity} decrementQuantity = {decrementQuantity}  removeItem = {removeItem} />      {/*here the productList = products because , products has the updated version of productList due to useState*/}
+        <Footer totalAmount = {totalAmount} resetQuantity = {resetQuantity} />
       </main>
     </>
   );
